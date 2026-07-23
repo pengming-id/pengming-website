@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>作品 — 芃洺設計 Pengming Interior Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@400;500&family=Lora:ital@0;1&family=Noto+Serif+TC:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --color-warm-white:#F6F3EE;
+    --color-warm-white-deep:#EAE4DA;
+    --color-deep-brown:#1A1714;
+    --color-body-text:#4A443E;
+    --color-taupe:#A89078;
+    --color-taupe-light:#C9BBA8;
+
+    --font-cn:'Noto Serif TC', serif;
+    --font-en:'Inter', sans-serif;
+    --font-en-logo:'Cormorant Garamond', serif;
+    --font-en-serif:'Lora', serif;
+
+    --space-xs:8px;
+    --space-sm:16px;
+    --space-md:32px;
+    --space-lg:64px;
+    --space-xl:100px;
+    --space-2xl:160px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  body{
+    background:var(--color-warm-white);
+    color:var(--color-body-text);
+    font-family:var(--font-cn);
+    font-weight:300;
+    line-height:1.8;
+    letter-spacing:0.01em;
+    overflow-x:hidden;
+  }
+
+  .container{
+    max-width:1320px;
+    margin:0 auto;
+    padding:0 100px;
+  }
+
+  /* ===== NAV ===== */
+  header.nav{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    background:rgba(246,243,238,0.96);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid transparent;
+    transition:border-color 0.3s;
+  }
+  header.nav.scrolled{ border-bottom:1px solid var(--color-taupe-light); }
+
+  .nav-inner{
+    max-width:1320px;
+    margin:0 auto;
+    padding:26px 100px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+
+  .logo{
+    font-family:var(--font-en-logo);
+    font-weight:400;
+    font-size:21px;
+    letter-spacing:0.18em;
+    color:var(--color-deep-brown);
+    text-decoration:none;
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+  }
+  .logo span{ font-family:var(--font-cn); font-weight:300; font-size:14px; letter-spacing:0.05em; }
+
+  nav.menu{ display:flex; gap:46px; }
+  nav.menu a{
+    font-family:var(--font-en);
+    font-weight:400;
+    font-size:12px;
+    letter-spacing:0.18em;
+    color:var(--color-deep-brown);
+    text-decoration:none;
+    position:relative;
+    padding-bottom:4px;
+  }
+  nav.menu a.active{ color:var(--color-taupe); }
+  nav.menu a::after{
+    content:'';
+    position:absolute;
+    left:0;bottom:0;
+    width:0;height:1px;
+    background:currentColor;
+    opacity:0.6;
+    transition:width 0.3s ease-in-out;
+  }
+  nav.menu a:hover::after{ width:100%; }
+  nav.menu a.active::after{ width:100%; }
+
+  /* ===== PAGE HEAD ===== */
+  .page-head{ padding:120px 0 var(--space-md); }
+  .page-head .eyebrow{
+    font-family:var(--font-en);
+    font-weight:400;
+    font-size:11px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--color-taupe);
+    margin-bottom:var(--space-sm);
+  }
+  .page-head h1{
+    font-family:var(--font-cn);
+    font-weight:200;
+    font-size:30px;
+    color:var(--color-deep-brown);
+    letter-spacing:0.03em;
+    margin-bottom:var(--space-sm);
+  }
+  .page-head .sub{
+    font-size:14px;
+    color:var(--color-body-text);
+    max-width:480px;
+  }
+
+  /* ===== FILTER TABS ===== */
+  .filter-bar{
+    display:flex;
+    gap:var(--space-lg);
+    padding:var(--space-md) 0;
+    border-bottom:1px solid var(--color-taupe-light);
+    margin-bottom:var(--space-xl);
+  }
+  .filter-tab{
+    font-family:var(--font-en);
+    font-weight:400;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--color-body-text);
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding-bottom:6px;
+    position:relative;
+    transition:color 0.3s;
+  }
+  .filter-tab::after{
+    content:'';
+    position:absolute;
+    left:0; bottom:0;
+    width:0; height:1px;
+    background:var(--color-deep-brown);
+    transition:width 0.3s ease-in-out;
+  }
+  .filter-tab.active{ color:var(--color-deep-brown); }
+  .filter-tab.active::after{ width:100%; }
+  .filter-tab:hover{ color:var(--color-deep-brown); }
+
+  /* ===== WORKS GRID (與首頁規則一致) ===== */
+  .works-section{ padding-bottom:var(--space-2xl); }
+  .works-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:var(--space-sm);
+  }
+  .work-card{ display:flex; flex-direction:column; transition:opacity 0.3s; }
+  .work-card.hidden{ display:none; }
+  .work-image{
+    position:relative;
+    aspect-ratio:2/3;
+    overflow:hidden;
+    background:linear-gradient(140deg,#cfc4b3,#92805f);
+    margin-bottom:var(--space-sm);
+    cursor:pointer;
+  }
+  .work-card:nth-child(4n+2) .work-image{ background:linear-gradient(140deg,#c2b29c,#8c7860); }
+  .work-card:nth-child(4n+3) .work-image{ background:linear-gradient(140deg,#d6cdbf,#b0a18a); }
+  .work-card:nth-child(4n+4) .work-image{ background:linear-gradient(140deg,#bcae9a,#7d6b54); }
+  .work-image img{
+    width:100%; height:100%;
+    object-fit:cover;
+    transform:scale(1);
+    transition:transform 0.5s ease;
+    display:block;
+  }
+  .work-card:hover .work-image img{ transform:scale(1.04); }
+
+  .work-image-overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(20,17,14,0.45);
+    opacity:0;
+    transition:opacity 0.35s ease;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .work-image-overlay span{
+    font-family:var(--font-en);
+    font-weight:400;
+    font-size:14px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--color-warm-white);
+  }
+  .work-card:hover .work-image-overlay{ opacity:1; }
+
+  .work-title{
+    font-family:var(--font-cn);
+    font-weight:400;
+    font-size:16px;
+    color:var(--color-deep-brown);
+    letter-spacing:0.02em;
+    margin-bottom:8px;
+  }
+  .work-desc{
+    font-family:var(--font-cn);
+    font-weight:300;
+    font-size:13px;
+    line-height:1.7;
+    color:var(--color-body-text);
+    margin-bottom:12px;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .work-credit{
+    font-family:var(--font-en);
+    font-weight:400;
+    font-size:10px;
+    letter-spacing:0.15em;
+    color:var(--color-taupe);
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible{ opacity:1; transform:translateY(0); }
+
+  /* ===== FOOTER ===== */
+  footer{
+    border-top:1px solid var(--color-taupe-light);
+    padding:var(--space-lg) 0 var(--space-md);
+  }
+  .footer-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .footer-brand{
+    font-family:var(--font-cn);
+    font-weight:300;
+    font-size:15px;
+    color:var(--color-deep-brown);
+    letter-spacing:0.04em;
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+  }
+  .footer-brand small{
+    font-family:var(--font-en);
+    font-size:10px;
+    letter-spacing:0.15em;
+    color:var(--color-taupe);
+  }
+  .footer-contact{ display:flex; gap:22px; align-items:center; }
+  .footer-contact a{
+    display:flex; align-items:center; justify-content:center;
+    width:34px; height:34px;
+    border:1px solid var(--color-taupe-light);
+    border-radius:50%;
+    color:var(--color-body-text);
+    text-decoration:none;
+    transition:border-color 0.3s, color 0.3s;
+  }
+  .footer-contact a:hover{ border-color:var(--color-taupe); color:var(--color-taupe); }
+  .footer-contact svg{ width:15px; height:15px; }
+  .footer-bottom{
+    margin-top:var(--space-md);
+    font-family:var(--font-en);
+    font-size:10px;
+    color:var(--color-taupe-light);
+    letter-spacing:0.05em;
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">PENGMING<span>芃洺設計</span></a>
+    <nav class="menu">
+      <a href="about.html">關於</a>
+      <a href="works.html" class="active">作品</a>
+      <a href="services.html">服務</a>
+      <a href="journal.html">設計札記</a>
+      <a href="contact.html">聯繫</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="container reveal">
+    <div class="eyebrow">Works</div>
+    <h1>作品</h1>
+    <div class="sub">每一個空間,都從一次細緻的分析開始——關於需求、尺度與材質之間的取捨。</div>
+  </div>
+</section>
+
+<section class="works-section">
+  <div class="container reveal">
+    <div class="filter-bar">
+      <button class="filter-tab active" data-filter="all">全部</button>
+      <button class="filter-tab" data-filter="residential">住宅</button>
+      <button class="filter-tab" data-filter="fnb">餐飲空間</button>
+    </div>
+
+    <div class="works-grid">
+      <div class="work-card" data-category="residential">
+        <div class="work-image">
+          <div class="work-image-overlay"><span>Residential</span></div>
+        </div>
+        <div class="work-title">台中・歸所</div>
+        <div class="work-desc">獨棟透天住宅,以開放格局回應一家三代的日常節奏,讓光與動線重新定義家的尺度。</div>
+        <div class="work-credit">芃洺設計 | RESIDENTIAL</div>
+      </div>
+
+      <div class="work-card" data-category="fnb">
+        <div class="work-image">
+          <div class="work-image-overlay"><span>Food&Beverage</span></div>
+        </div>
+        <div class="work-title">台北・微醺時刻</div>
+        <div class="work-desc">義式餐酒館,以低調吧台與暖光勾勒夜晚的節奏,讓每一次入座都像一場緩慢的對話。</div>
+        <div class="work-credit">芃洺設計 | FOOD&BEVERAGE</div>
+      </div>
+
+      <div class="work-card" data-category="residential">
+        <div class="work-image">
+          <div class="work-image-overlay"><span>Residential</span></div>
+        </div>
+        <div class="work-title">台北・靜舍</div>
+        <div class="work-desc">單層住宅,刻意收斂材料種類,讓留白成為空間裡最安靜卻最有力的存在。</div>
+        <div class="work-credit">芃洺設計 | RESIDENTIAL</div>
+      </div>
+
+      <div class="work-card" data-category="fnb">
+        <div class="work-image">
+          <div class="work-image-overlay"><span>Food&Beverage</span></div>
+        </div>
+        <div class="work-title">台北・巷弄爐火</div>
+        <div class="work-desc">美式街頭漢堡店,用粗獷材質與隨性陳設,還原街角小店該有的煙火氣與溫度。</div>
+        <div class="work-credit">芃洺設計 | FOOD&BEVERAGE</div>
+      </div>
+
+      <div class="work-card" data-category="residential">
+        <div class="work-image">
+          <div class="work-image-overlay"><span>Residential</span></div>
+        </div>
+        <div class="work-title">台中・棲居</div>
+        <div class="work-desc">單層住宅,順應原始格局做輕量改造,讓家具與光線重新定義生活的尺度。</div>
+        <div class="work-credit">芃洺設計 | RESIDENTIAL</div>
+      </div>
+
+      <div class="work-card" data-category="fnb">
+        <div class="work-image">
+          <div class="work-image-overlay"><span>Food&Beverage</span></div>
+        </div>
+        <div class="work-title">台北・調色之間</div>
+        <div class="work-desc">創意餐酒館,以材質與色彩的對比關係,呈現自由卻不失節制的空間表情。</div>
+        <div class="work-credit">芃洺設計 | FOOD&BEVERAGE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-row">
+      <div class="footer-brand">芃洺設計 <small>PENGMING INTERIOR DESIGN</small></div>
+      <div class="footer-contact">
+        <a href="mailto:liza@pengming-id.com" aria-label="Email" title="liza@pengming-id.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1"></rect><path d="M3 6.5l8.4 6.2a1.5 1.5 0 0 0 1.8 0L21.5 6.5"></path></svg>
+        </a>
+        <a href="https://www.instagram.com/pengming.co" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"></rect><circle cx="12" cy="12" r="3.6"></circle><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none"></circle></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 PENGMING INTERIOR DESIGN. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  reveals.forEach(r => obs.observe(r));
+
+  const tabs = document.querySelectorAll('.filter-tab');
+  const cards = document.querySelectorAll('.work-card');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+      cards.forEach(card => {
+        if(filter === 'all' || card.dataset.category === filter){
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

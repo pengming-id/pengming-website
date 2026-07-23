@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>服務 — 芃洺設計 Pengming Interior Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@400;500&family=Noto+Serif+TC:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --color-warm-white:#F6F3EE;
+    --color-warm-white-deep:#EAE4DA;
+    --color-deep-brown:#1A1714;
+    --color-body-text:#4A443E;
+    --color-taupe:#A89078;
+    --color-taupe-light:#C9BBA8;
+    --font-cn:'Noto Serif TC',serif;
+    --font-en:'Inter',sans-serif;
+    --font-en-logo:'Cormorant Garamond',serif;
+    --space-sm:16px; --space-md:32px;
+    --space-lg:64px; --space-xl:100px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--color-warm-white);
+    color:var(--color-body-text);
+    font-family:var(--font-cn);
+    font-weight:300; line-height:1.8;
+    overflow-x:hidden;
+  }
+  .container{ max-width:1320px; margin:0 auto; padding:0 100px; }
+
+  /* NAV */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(246,243,238,0.96); backdrop-filter:blur(6px);
+    border-bottom:1px solid transparent; transition:border-color 0.3s;
+  }
+  header.nav.scrolled{ border-bottom:1px solid var(--color-taupe-light); }
+  .nav-inner{
+    max-width:1320px; margin:0 auto; padding:26px 100px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .logo{
+    font-family:var(--font-en-logo); font-weight:400; font-size:21px;
+    letter-spacing:0.18em; color:var(--color-deep-brown);
+    text-decoration:none; display:flex; align-items:baseline; gap:12px;
+  }
+  .logo span{ font-family:var(--font-cn); font-weight:300; font-size:14px; letter-spacing:0.05em; }
+  nav.menu{ display:flex; gap:46px; }
+  nav.menu a{
+    font-family:var(--font-en); font-weight:400; font-size:12px;
+    letter-spacing:0.18em; color:var(--color-deep-brown);
+    text-decoration:none; position:relative; padding-bottom:4px;
+  }
+  nav.menu a.active{ color:var(--color-taupe); }
+  nav.menu a::after{
+    content:''; position:absolute; left:0; bottom:0;
+    width:0; height:1px; background:currentColor;
+    opacity:0.6; transition:width 0.3s;
+  }
+  nav.menu a:hover::after, nav.menu a.active::after{ width:100%; }
+
+  /* PAGE HEAD */
+  .page-head{ padding:120px 0 var(--space-xl); }
+  .eyebrow{
+    font-family:var(--font-en); font-weight:400; font-size:11px;
+    letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--color-taupe); margin-bottom:var(--space-sm);
+  }
+  .page-head-row{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:var(--space-xl); align-items:end;
+    padding-top:var(--space-md);
+    border-top:1px solid var(--color-taupe-light);
+  }
+  .tagline{
+    font-family:var(--font-cn); font-weight:200; font-size:26px;
+    color:var(--color-deep-brown); letter-spacing:0.03em; line-height:1.7;
+  }
+  .intro-text{ font-size:14px; line-height:2.1; color:var(--color-body-text); }
+
+  /* ── PROCESS ────────────────────────────────── */
+  .process-section{ padding:0 0 var(--space-xl); }
+  .step{ border-top:1px solid var(--color-taupe-light); padding-top:var(--space-lg); margin-bottom:var(--space-xl); }
+
+  /* 共用文字區塊 */
+  .step-num{
+    font-family:var(--font-en-logo); font-weight:400;
+    font-size:48px; color:var(--color-taupe-light);
+    letter-spacing:0.02em; line-height:1;
+    margin-bottom:var(--space-sm);
+  }
+  .step-title{
+    font-family:var(--font-cn); font-weight:200; font-size:22px;
+    color:var(--color-deep-brown); letter-spacing:0.04em;
+    margin-bottom:6px;
+  }
+  .step-en{
+    font-family:var(--font-en); font-weight:400; font-size:11px;
+    letter-spacing:0.15em; color:var(--color-taupe);
+    text-transform:uppercase; margin-bottom:var(--space-md);
+  }
+  .step-prose{
+    font-size:15px; line-height:2.05; color:var(--color-body-text);
+  }
+  .step-caption{
+    margin-top:10px;
+    font-family:var(--font-en); font-weight:400;
+    font-size:10px; letter-spacing:0.15em; text-transform:uppercase;
+    color:var(--color-taupe-light);
+  }
+  .caption-right{ text-align:right; }
+
+  /* 共用圖片佔位 */
+  .img-ph{ width:100%; height:100%; display:block; }
+
+  /* ── 版型 A: 全寬 — 文字上方，圖片下方 ────── */
+  .layout-full .text-block{
+    display:flex; gap:var(--space-lg); align-items:baseline;
+    margin-bottom:var(--space-md);
+  }
+  .layout-full .text-block .step-num{ flex-shrink:0; width:90px; }
+  .layout-full .text-block .text-body{ flex:1; }
+  .layout-full .img-wrap{ width:100%; overflow:hidden; }
+
+  /* ── 版型 B: 文字左 + 圖片右 ────────────── */
+  .layout-right{
+    display:grid;
+    grid-template-columns:1fr 1.45fr;
+    gap:var(--space-xl);
+    align-items:center;
+    margin-bottom:var(--space-sm);
+  }
+  .layout-right .text-block{ padding-right:var(--space-md); }
+  .layout-right .img-wrap{ overflow:hidden; }
+
+  /* ── 版型 C: 圖片左 + 文字右 ────────────── */
+  .layout-left{
+    display:grid;
+    grid-template-columns:1.45fr 1fr;
+    gap:var(--space-xl);
+    align-items:center;
+    margin-bottom:var(--space-sm);
+  }
+  .layout-left .img-wrap{ overflow:hidden; }
+  .layout-left .text-block{ padding-left:var(--space-md); }
+
+  /* 各步驟圖片尺寸與色調 */
+  .step-01 .img-wrap{ aspect-ratio:16/7; }
+  .step-01 .img-ph{ background:linear-gradient(150deg,#d9d0c4,#a89078); }
+
+  .step-02 .img-wrap{ aspect-ratio:4/3; }
+  .step-02 .img-ph{ background:linear-gradient(150deg,#cfc4b3,#8c7a64); }
+
+  .step-03 .img-wrap{ aspect-ratio:3/4; }
+  .step-03 .img-ph{ background:linear-gradient(150deg,#c8bfb2,#7d6b54); }
+
+  .step-04 .img-wrap{ aspect-ratio:4/3; }
+  .step-04 .img-ph{ background:linear-gradient(150deg,#ccc4b8,#8a7864); }
+
+  .step-05 .img-wrap{ aspect-ratio:16/6; }
+  .step-05 .img-ph{ background:linear-gradient(150deg,#d4cfc8,#998470); }
+
+  .step-06 .img-wrap{ aspect-ratio:3/4; }
+  .step-06 .img-ph{ background:linear-gradient(150deg,#c4bdb3,#7d6b54); }
+
+  .step-07 .img-wrap{ aspect-ratio:4/3; }
+  .step-07 .img-ph{ background:linear-gradient(150deg,#cfc4b3,#8c7a64); }
+
+  .step-08 .img-wrap{ aspect-ratio:16/7; }
+  .step-08 .img-ph{ background:linear-gradient(150deg,#d4cfc8,#a0907a); }
+
+  /* CTA */
+  .cta-section{
+    background:var(--color-warm-white-deep);
+    padding:var(--space-lg) 0; text-align:center;
+  }
+  .cta-section h2{
+    font-family:var(--font-cn); font-weight:200; font-size:24px;
+    color:var(--color-deep-brown); letter-spacing:0.03em; margin-bottom:var(--space-md);
+  }
+  .cta-btn{
+    display:inline-block; font-family:var(--font-en); font-weight:400;
+    font-size:11px; letter-spacing:0.25em; color:var(--color-warm-white);
+    background:var(--color-deep-brown); padding:18px 48px;
+    text-decoration:none; transition:background 0.3s;
+  }
+  .cta-btn:hover{ background:var(--color-taupe); }
+
+  /* FOOTER */
+  footer{ border-top:1px solid var(--color-taupe-light); padding:var(--space-lg) 0 var(--space-md); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; }
+  .footer-brand{
+    font-family:var(--font-cn); font-weight:300; font-size:15px;
+    color:var(--color-deep-brown); display:flex; align-items:baseline; gap:10px;
+  }
+  .footer-brand small{ font-family:var(--font-en); font-size:10px; letter-spacing:0.15em; color:var(--color-taupe); }
+  .footer-contact{ display:flex; gap:22px; }
+  .footer-contact a{
+    display:flex; align-items:center; justify-content:center;
+    width:34px; height:34px; border:1px solid var(--color-taupe-light);
+    border-radius:50%; color:var(--color-body-text); text-decoration:none;
+    transition:border-color 0.3s, color 0.3s;
+  }
+  .footer-contact a:hover{ border-color:var(--color-taupe); color:var(--color-taupe); }
+  .footer-contact svg{ width:15px; height:15px; }
+  .footer-bottom{ margin-top:var(--space-md); font-family:var(--font-en); font-size:10px; color:var(--color-taupe-light); text-align:center; }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible{ opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">PENGMING<span>芃洺設計</span></a>
+    <nav class="menu">
+      <a href="about.html">關於</a>
+      <a href="works.html">作品</a>
+      <a href="services.html" class="active">服務</a>
+      <a href="journal.html">設計札記</a>
+      <a href="contact.html">聯繫</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="container reveal">
+    <div class="eyebrow">Services</div>
+    <div class="page-head-row">
+      <div class="tagline">每一次合作,<br>都從一次細緻的理解開始。</div>
+      <div class="intro-text">設計不是填滿空間,而是透過每一個決策的取捨,讓空間真正回應使用者的生活方式。我們用清楚的過程,陪伴每個想法走向落成。</div>
+    </div>
+  </div>
+</section>
+
+<section class="process-section">
+  <div class="container">
+
+    <!-- 01 全寬 A -->
+    <div class="step step-01 reveal">
+      <div class="layout-full">
+        <div class="text-block">
+          <div class="step-num">01</div>
+          <div class="text-body">
+            <div class="step-title">設計咨詢</div>
+            <div class="step-en">Consultation</div>
+            <p class="step-prose">每一個空間的故事,都從第一次對話展開。我們聆聽你對生活的想像——不論是清晰的方向,還是還未成形的感受——並在這個過程中,誠實說明我們能做到的事。</p>
+          </div>
+        </div>
+        <div class="img-wrap"><div class="img-ph"></div></div>
+      </div>
+      <div class="step-caption">設計咨詢 · CONSULTATION</div>
+    </div>
+
+    <!-- 02 文字左 + 圖右 B -->
+    <div class="step step-02 reveal">
+      <div class="layout-right">
+        <div class="text-block">
+          <div class="step-num">02</div>
+          <div class="step-title">初步規劃</div>
+          <div class="step-en">Preliminary Planning</div>
+          <p class="step-prose">場勘不只是丈量數字,是空間給我們的第一份訊息。踏入現場的那一刻,光線的方向、動線的可能、格局的限制與潛力,已經開始在腦海中成形。</p>
+        </div>
+        <div class="img-wrap"><div class="img-ph"></div></div>
+      </div>
+      <div class="step-caption caption-right">初步平面配置 · PRELIMINARY PLANNING</div>
+    </div>
+
+    <!-- 03 圖左 + 文字右 C -->
+    <div class="step step-03 reveal">
+      <div class="layout-left">
+        <div class="img-wrap"><div class="img-ph"></div></div>
+        <div class="text-block">
+          <div class="step-num">03</div>
+          <div class="step-title">委任簽約</div>
+          <div class="step-en">Agreement</div>
+          <p class="step-prose">白紙黑字,是合作正式開始的標誌,也是彼此信任的基礎。合約明確了設計範圍、時間節點與雙方的責任,讓後續的每一個決策都有所依循。</p>
+        </div>
+      </div>
+      <div class="step-caption">委任合約 · AGREEMENT</div>
+    </div>
+
+    <!-- 04 文字左 + 圖右 B -->
+    <div class="step step-04 reveal">
+      <div class="layout-right">
+        <div class="text-block">
+          <div class="step-num">04</div>
+          <div class="step-title">細部討論</div>
+          <div class="step-en">Detail Development</div>
+          <p class="step-prose">這是設計最深入的一個階段。從立面造型到燈具迴路的配置,每一項細節都需要在美感與機能之間反覆推敲。我們不追求快速完成,而是確保每一個決定都站得住腳。</p>
+        </div>
+        <div class="img-wrap"><div class="img-ph"></div></div>
+      </div>
+      <div class="step-caption caption-right">設計細節推敲 · DETAIL DEVELOPMENT</div>
+    </div>
+
+    <!-- 05 全寬 A — 中場錨點 -->
+    <div class="step step-05 reveal">
+      <div class="layout-full">
+        <div class="text-block">
+          <div class="step-num">05</div>
+          <div class="text-body">
+            <div class="step-title">設計完成</div>
+            <div class="step-en">Design Completion</div>
+            <p class="step-prose">圖紙是一種語言——它將所有討論過的想法,轉化為可以被精確執行的指令。完整的設計圖說交付,代表每一個設計決策都已有了清楚的答案。</p>
+          </div>
+        </div>
+        <div class="img-wrap"><div class="img-ph"></div></div>
+      </div>
+      <div class="step-caption">設計圖說交付 · DESIGN COMPLETION</div>
+    </div>
+
+    <!-- 06 圖左 + 文字右 C -->
+    <div class="step step-06 reveal">
+      <div class="layout-left">
+        <div class="img-wrap"><div class="img-ph"></div></div>
+        <div class="text-block">
+          <div class="step-num">06</div>
+          <div class="step-title">工程報價與簽約</div>
+          <div class="step-en">Construction Agreement</div>
+          <p class="step-prose">數字應該是透明的。我們與你逐項確認工程預算,說明每一分費用背後的意義,讓預算真正用在值得的地方——而不是在工程途中才出現意外的驚喜。</p>
+        </div>
+      </div>
+      <div class="step-caption">工程合約確認 · CONSTRUCTION AGREEMENT</div>
+    </div>
+
+    <!-- 07 文字左 + 圖右 B -->
+    <div class="step step-07 reveal">
+      <div class="layout-right">
+        <div class="text-block">
+          <div class="step-num">07</div>
+          <div class="step-title">工程進行</div>
+          <div class="step-en">Construction</div>
+          <p class="step-prose">設計的品質,最終由施工決定。我們親自監工,確保每一個細節都如設計圖說所示,如實落地——因為空間的好壞,往往藏在那些看不見的收邊與工序裡。</p>
+        </div>
+        <div class="img-wrap"><div class="img-ph"></div></div>
+      </div>
+      <div class="step-caption caption-right">現場監工管理 · CONSTRUCTION</div>
+    </div>
+
+    <!-- 08 全寬 A — 收尾 -->
+    <div class="step step-08 reveal">
+      <div class="layout-full">
+        <div class="text-block">
+          <div class="step-num">08</div>
+          <div class="text-body">
+            <div class="step-title">完工驗收</div>
+            <div class="step-en">Handover</div>
+            <p class="step-prose">空間交付,是合作關係的句點,也是你生活新章節的起點。完工後的保固,是我們對自己工作品質的承諾——設計的責任,不在交屋那一天就結束了。</p>
+          </div>
+        </div>
+        <div class="img-wrap"><div class="img-ph"></div></div>
+      </div>
+      <div class="step-caption">完工交屋 · HANDOVER</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container reveal">
+    <h2>準備好開始你的空間計畫了嗎</h2>
+    <a href="contact.html" class="cta-btn">填寫需求表單</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-row">
+      <div class="footer-brand">芃洺設計 <small>PENGMING INTERIOR DESIGN</small></div>
+      <div class="footer-contact">
+        <a href="mailto:liza@pengming-id.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 6.5l8.4 6.2a1.5 1.5 0 0 0 1.8 0L21.5 6.5"/></svg>
+        </a>
+        <a href="https://www.instagram.com/pengming.co" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none"/></svg>
+        </a>
+        
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 PENGMING INTERIOR DESIGN. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20);
+  });
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+  },{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>
