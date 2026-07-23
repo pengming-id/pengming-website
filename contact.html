@@ -63,16 +63,15 @@
 
   /* MAP — full bleed, OpenStreetMap iframe */
   .map-section{
-    margin-top:78px; /* nav height */
+    margin-top:78px;
     width:100%; height:420px;
-    background:var(--color-warm-white-deep);
     overflow:hidden; position:relative;
   }
   .map-section iframe{
-    width:100%; height:100%;
+    width:100%;
+    height:calc(100% + 55px);
     border:none; display:block;
-    filter:grayscale(100%) contrast(0.88) brightness(1.05);
-    opacity:0.85;
+    margin-top:-55px;
   }
 
   /* PAGE HEAD */
@@ -237,10 +236,13 @@
 
 <!-- 全寬地圖 — 台中市西屯區福祥街3號 -->
 <div class="map-section">
-  <!-- 地圖佔位 — 等 Google My Maps 設定完成後替換 iframe -->
-  <div style="width:100%;height:100%;background:#EAE4DA;display:flex;align-items:center;justify-content:center;">
-    <span style="font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0.2em;color:#C9BBA8;">MAP COMING SOON</span>
-  </div>
+  <iframe
+    src="https://www.google.com/maps/d/embed?mid=1bsduVnZaQXNdCkQPftM0--opgGHBe-Q"
+    style="width:100%;height:100%;border:none;display:block;filter:grayscale(20%) brightness(1.02);"
+    allowfullscreen
+    loading="lazy"
+    title="芃洺設計位置">
+  </iframe>
 </div>
 
 <section class="page-head">
